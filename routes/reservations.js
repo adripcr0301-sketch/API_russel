@@ -4,6 +4,21 @@ const Reservation = require('../models/reservation');
 const Catway = require('../models/catway');
 const authenticate = require('../middleware/auth');
 
+// GET /reservations - Lister toutes les réservations
+router.get('/reservations', authenticate, async (req, res) => {
+  try {
+    const reservations = await Reservation.find().sort('catwayNumber');
+
+    if (req.headers.accept && req.headers.accept.includes('text/html')) {
+      return res.render('reservations/all', { reservations, user: req.user });
+    }
+
+    res.json(reservations);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // GET /catways/:id/reservations - Lister les réservations d'un catway
 router.get('/catways/:id/reservations', authenticate, async (req, res) => {
   try {

@@ -1,0 +1,40 @@
+<nav>
+  <a href="/dashboard" class="brand">Port Russell</a>
+  <div>
+    <a href="/dashboard">Tableau de bord</a>
+    <a href="/catways">Catways</a>
+    <a href="/users">Utilisateurs</a>
+    <a href="/docs">Documentation API</a>
+    <a href="/logout">Déconnexion</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Ajouter un catway</h1>
+
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+
+  <div class="card">
+    <form action="/catways" method="POST">
+      <div class="form-group">
+        <label for="catwayNumber">Numéro</label>
+        <input type="number" id="catwayNumber" name="catwayNumber" required value="<%= (typeof catway !== 'undefined' && catway.catwayNumber) || '' %>">
+      </div>
+      <div class="form-group">
+        <label for="catwayType">Type</label>
+        <select id="catwayType" name="catwayType" required>
+          <option value="short">Short</option>
+          <option value="long">Long</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="catwayState">État</label>
+        <textarea id="catwayState" name="catwayState" rows="3"><%= (typeof catway !== 'undefined' && catway.catwayState) || 'bon état' %></textarea>
+      </div>
+      <button type="submit" class="btn btn-success">Créer</button>
+      <a href="/catways" class="btn btn-primary">Annuler</a>
+    </form>
+  </div>
+</div>

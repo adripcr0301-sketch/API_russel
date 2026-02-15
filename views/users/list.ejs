@@ -1,0 +1,41 @@
+<nav>
+  <a href="/dashboard" class="brand">Port Russell</a>
+  <div>
+    <a href="/dashboard">Tableau de bord</a>
+    <a href="/catways">Catways</a>
+    <a href="/users">Utilisateurs</a>
+    <a href="/docs">Documentation API</a>
+    <a href="/logout">Déconnexion</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>Utilisateurs</h1>
+    <a href="/users/new" class="btn btn-success">Ajouter un utilisateur</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nom d'utilisateur</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(u => { %>
+        <tr>
+          <td><%= u.username %></td>
+          <td><%= u.email %></td>
+          <td class="actions">
+            <a href="/users/<%= u.email %>" class="btn btn-primary">Détails</a>
+            <form action="/users/<%= u.email %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cet utilisateur ?')">
+              <button type="submit" class="btn btn-danger">Supprimer</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

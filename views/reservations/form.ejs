@@ -1,0 +1,41 @@
+<nav>
+  <a href="/dashboard" class="brand">Port Russell</a>
+  <div>
+    <a href="/dashboard">Tableau de bord</a>
+    <a href="/catways">Catways</a>
+    <a href="/users">Utilisateurs</a>
+    <a href="/docs">Documentation API</a>
+    <a href="/logout">Déconnexion</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Nouvelle réservation - Catway n°<%= catwayNumber %></h1>
+
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+
+  <div class="card">
+    <form action="/catways/<%= catwayNumber %>/reservations" method="POST">
+      <div class="form-group">
+        <label for="clientName">Nom du client</label>
+        <input type="text" id="clientName" name="clientName" required value="<%= (typeof reservation !== 'undefined' && reservation.clientName) || '' %>">
+      </div>
+      <div class="form-group">
+        <label for="boatName">Nom du bateau</label>
+        <input type="text" id="boatName" name="boatName" required value="<%= (typeof reservation !== 'undefined' && reservation.boatName) || '' %>">
+      </div>
+      <div class="form-group">
+        <label for="startDate">Date de début</label>
+        <input type="date" id="startDate" name="startDate" required>
+      </div>
+      <div class="form-group">
+        <label for="endDate">Date de fin</label>
+        <input type="date" id="endDate" name="endDate" required>
+      </div>
+      <button type="submit" class="btn btn-success">Créer</button>
+      <a href="/catways/<%= catwayNumber %>/reservations" class="btn btn-primary">Annuler</a>
+    </form>
+  </div>
+</div>

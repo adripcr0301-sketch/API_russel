@@ -18,6 +18,11 @@ router.get('/', authenticate, async (req, res) => {
   }
 });
 
+// GET /users/new - Formulaire de création
+router.get('/new', authenticate, (req, res) => {
+  res.render('users/form', { formUser: {}, error: null, user: req.user });
+});
+
 // GET /users/:email - Détails d'un utilisateur
 router.get('/:email', authenticate, async (req, res) => {
   try {

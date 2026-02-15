@@ -57,6 +57,11 @@ app.get('/dashboard', authenticate, async (req, res) => {
   });
 });
 
+// Documentation API
+app.get('/docs', (req, res) => {
+  res.render('docs');
+});
+
 // Routes API
 app.use('/', authRoutes);
 app.use('/catways', catwayRoutes);

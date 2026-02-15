@@ -1,0 +1,44 @@
+<nav>
+  <a href="/dashboard" class="brand">Port Russell</a>
+  <div>
+    <a href="/dashboard">Tableau de bord</a>
+    <a href="/catways">Catways</a>
+    <a href="/users">Utilisateurs</a>
+    <a href="/docs">Documentation API</a>
+    <a href="/logout">Déconnexion</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>Liste des Catways</h1>
+    <a href="/catways/new" class="btn btn-success">Ajouter un catway</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Numéro</th>
+        <th>Type</th>
+        <th>État</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% catways.forEach(c => { %>
+        <tr>
+          <td><%= c.catwayNumber %></td>
+          <td><%= c.catwayType %></td>
+          <td><%= c.catwayState %></td>
+          <td class="actions">
+            <a href="/catways/<%= c.catwayNumber %>" class="btn btn-primary">Détails</a>
+            <a href="/catways/<%= c.catwayNumber %>/reservations" class="btn btn-success">Réservations</a>
+            <form action="/catways/<%= c.catwayNumber %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer ce catway ?')">
+              <button type="submit" class="btn btn-danger">Supprimer</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

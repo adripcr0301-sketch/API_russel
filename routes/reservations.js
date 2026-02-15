@@ -19,6 +19,11 @@ router.get('/catways/:id/reservations', authenticate, async (req, res) => {
   }
 });
 
+// GET /catways/:id/reservations/new - Formulaire de création
+router.get('/catways/:id/reservations/new', authenticate, (req, res) => {
+  res.render('reservations/form', { reservation: {}, catwayNumber: req.params.id, error: null, user: req.user });
+});
+
 // GET /catways/:id/reservations/:idReservation - Détails d'une réservation
 router.get('/catways/:id/reservations/:idReservation', authenticate, async (req, res) => {
   try {

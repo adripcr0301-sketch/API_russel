@@ -1,0 +1,37 @@
+<nav>
+  <a href="/dashboard" class="brand">Port Russell</a>
+  <div>
+    <a href="/dashboard">Tableau de bord</a>
+    <a href="/catways">Catways</a>
+    <a href="/users">Utilisateurs</a>
+    <a href="/docs">Documentation API</a>
+    <a href="/logout">Déconnexion</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Ajouter un utilisateur</h1>
+
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+
+  <div class="card">
+    <form action="/users" method="POST">
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur</label>
+        <input type="text" id="username" name="username" required value="<%= (typeof formUser !== 'undefined' && formUser.username) || '' %>">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required value="<%= (typeof formUser !== 'undefined' && formUser.email) || '' %>">
+      </div>
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" name="password" required minlength="6">
+      </div>
+      <button type="submit" class="btn btn-success">Créer</button>
+      <a href="/users" class="btn btn-primary">Annuler</a>
+    </form>
+  </div>
+</div>

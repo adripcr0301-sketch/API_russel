@@ -18,6 +18,11 @@ router.get('/', authenticate, async (req, res) => {
   }
 });
 
+// GET /catways/new - Formulaire de création
+router.get('/new', authenticate, (req, res) => {
+  res.render('catways/form', { catway: {}, error: null, user: req.user });
+});
+
 // GET /catways/:id - Détails d'un catway
 router.get('/:id', authenticate, async (req, res) => {
   try {

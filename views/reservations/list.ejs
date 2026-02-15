@@ -1,0 +1,53 @@
+<nav>
+  <a href="/dashboard" class="brand">Port Russell</a>
+  <div>
+    <a href="/dashboard">Tableau de bord</a>
+    <a href="/catways">Catways</a>
+    <a href="/users">Utilisateurs</a>
+    <a href="/docs">Documentation API</a>
+    <a href="/logout">Déconnexion</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>Réservations - Catway n°<%= catwayNumber %></h1>
+    <a href="/catways/<%= catwayNumber %>/reservations/new" class="btn btn-success">Ajouter une réservation</a>
+  </div>
+
+  <% if (reservations.length === 0) { %>
+    <div class="card"><p>Aucune réservation pour ce catway.</p></div>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Bateau</th>
+          <th>Début</th>
+          <th>Fin</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% reservations.forEach(r => { %>
+          <tr>
+            <td><%= r.clientName %></td>
+            <td><%= r.boatName %></td>
+            <td><%= new Date(r.startDate).toLocaleDateString('fr-FR') %></td>
+            <td><%= new Date(r.endDate).toLocaleDateString('fr-FR') %></td>
+            <td class="actions">
+              <a href="/catways/<%= catwayNumber %>/reservations/<%= r._id %>" class="btn btn-primary">Détails</a>
+              <form action="/catways/<%= catwayNumber %>/reservations/<%= r._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cette réservation ?')">
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <div style="margin-top: 20px;">
+    <a href="/catways" class="btn btn-primary">Retour aux catways</a>
+  </div>
+</div>

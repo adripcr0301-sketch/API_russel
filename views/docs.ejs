@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation API - Port Russell</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f4f8; color: #333; }
+    nav { background: #1a5276; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+    nav a { color: white; text-decoration: none; margin-left: 20px; font-size: 14px; }
+    nav .brand { font-size: 18px; font-weight: bold; }
+    .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+    h1 { color: #1a5276; margin-bottom: 20px; }
+    h2 { color: #1a5276; margin: 30px 0 15px; border-bottom: 2px solid #1a5276; padding-bottom: 5px; }
+    h3 { margin: 15px 0 8px; }
+    .endpoint { background: white; border-radius: 8px; padding: 15px 20px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+    .method { display: inline-block; padding: 3px 10px; border-radius: 4px; color: white; font-weight: bold; font-size: 13px; margin-right: 10px; }
+    .get { background: #27ae60; }
+    .post { background: #2980b9; }
+    .put { background: #f39c12; }
+    .delete { background: #c0392b; }
+    .route { font-family: monospace; font-size: 15px; }
+    .desc { color: #666; margin-top: 5px; font-size: 14px; }
+    code { background: #ecf0f1; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+    .auth-note { background: #fef9e7; border-left: 4px solid #f39c12; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px; }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    table th, table td { text-align: left; padding: 8px 12px; border: 1px solid #ddd; font-size: 14px; }
+    table th { background: #ecf0f1; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="brand">Port Russell - API Docs</a>
+    <div>
+      <a href="/">Accueil</a>
+      <a href="/dashboard">Tableau de bord</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Documentation de l'API</h1>
+    <p>API REST pour la gestion du port de plaisance Russell. Toutes les routes (sauf login) nécessitent une authentification par token JWT.</p>
+
+    <div class="auth-note">
+      <strong>Authentification :</strong> Envoyez une requête POST à <code>/login</code> avec email et password. Le token JWT est retourné dans la réponse et stocké dans un cookie httpOnly.
+    </div>
+
+    <!-- AUTH -->
+    <h2>Authentification</h2>
+
+    <div class="endpoint">
+      <span class="method post">POST</span>
+      <span class="route">/login</span>
+      <p class="desc">Connexion d'un utilisateur. Corps : <code>{ "email", "password" }</code>. Retourne un token JWT.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span class="route">/logout</span>
+      <p class="desc">Déconnexion. Supprime le cookie de session.</p>
+    </div>
+
+    <!-- CATWAYS -->
+    <h2>Catways</h2>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span class="route">/catways</span>
+      <p class="desc">Lister tous les catways.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span class="route">/catways/:id</span>
+      <p class="desc">Récupérer les détails d'un catway. <code>:id</code> = numéro du catway.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method post">POST</span>
+      <span class="route">/catways</span>
+      <p class="desc">Créer un catway.</p>
+      <h3>Corps de la requête :</h3>
+      <table>
+        <tr><th>Champ</th><th>Type</th><th>Requis</th><th>Description</th></tr>
+        <tr><td>catwayNumber</td><td>Number</td><td>Oui</td><td>Numéro unique du catway</td></tr>
+        <tr><td>catwayType</td><td>String</td><td>Oui</td><td>"long" ou "short"</td></tr>
+        <tr><td>catwayState</td><td>String</td><td>Non</td><td>État du catway (défaut : "bon état")</td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <span class="method put">PUT</span>
+      <span class="route">/catways/:id</span>
+      <p class="desc">Modifier l'état d'un catway. Seul <code>catwayState</code> est modifiable.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method delete">DELETE</span>
+      <span class="route">/catways/:id</span>
+      <p class="desc">Supprimer un catway.</p>
+    </div>
+
+    <!-- RESERVATIONS -->
+    <h2>Réservations</h2>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span class="route">/catways/:id/reservations</span>
+      <p class="desc">Lister les réservations d'un catway.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span class="route">/catways/:id/reservations/:idReservation</span>
+      <p class="desc">Détails d'une réservation.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method post">POST</span>
+      <span class="route">/catways/:id/reservations</span>
+      <p class="desc">Créer une réservation pour un catway.</p>
+      <h3>Corps de la requête :</h3>
+      <table>
+        <tr><th>Champ</th><th>Type</th><th>Requis</th><th>Description</th></tr>
+        <tr><td>clientName</td><td>String</td><td>Oui</td><td>Nom du client</td></tr>
+        <tr><td>boatName</td><td>String</td><td>Oui</td><td>Nom du bateau</td></tr>
+        <tr><td>startDate</td><td>Date</td><td>Oui</td><td>Date de début (ISO 8601)</td></tr>
+        <tr><td>endDate</td><td>Date</td><td>Oui</td><td>Date de fin (doit être après startDate)</td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <span class="method put">PUT</span>
+      <span class="route">/catways/:id/reservations/:idReservation</span>
+      <p class="desc">Modifier une réservation.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method delete">DELETE</span>
+      <span class="route">/catways/:id/reservations/:idReservation</span>
+      <p class="desc">Supprimer une réservation.</p>
+    </div>
+
+    <!-- USERS -->
+    <h2>Utilisateurs</h2>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span class="route">/users</span>
+      <p class="desc">Lister tous les utilisateurs.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span class="route">/users/:email</span>
+      <p class="desc">Détails d'un utilisateur par email.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method post">POST</span>
+      <span class="route">/users</span>
+      <p class="desc">Créer un utilisateur.</p>
+      <h3>Corps de la requête :</h3>
+      <table>
+        <tr><th>Champ</th><th>Type</th><th>Requis</th><th>Description</th></tr>
+        <tr><td>username</td><td>String</td><td>Oui</td><td>Min 3 caractères</td></tr>
+        <tr><td>email</td><td>String</td><td>Oui</td><td>Email unique et valide</td></tr>
+        <tr><td>password</td><td>String</td><td>Oui</td><td>Min 6 caractères</td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <span class="method put">PUT</span>
+      <span class="route">/users/:email</span>
+      <p class="desc">Modifier un utilisateur.</p>
+    </div>
+
+    <div class="endpoint">
+      <span class="method delete">DELETE</span>
+      <span class="route">/users/:email</span>
+      <p class="desc">Supprimer un utilisateur.</p>
+    </div>
+  </div>
+</body>
+</html>
